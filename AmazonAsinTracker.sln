@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonAsinTrackerApi", "Ama
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonAsinTrackerCron", "AmazonAsinTrackerCron\AmazonAsinTrackerCron.csproj", "{EE30A1A4-259E-4278-B34A-AEA58F61C91D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonAsinTracker.Application", "AmazonAsinTracker.Application\AmazonAsinTracker.Application.csproj", "{305388DB-C1A3-4E14-9F52-2D107375C4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonAsinTracker.Domain", "AmazonAsinTracker.Domain\AmazonAsinTracker.Domain.csproj", "{7267D84D-9ED7-484B-A0ED-9DF7B593E70D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonAsinTracker.Infrastructure", "AmazonAsinTracker.Infrastructure\AmazonAsinTracker.Infrastructure.csproj", "{8A342A78-AF6C-48EB-A259-410986E791FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{EE30A1A4-259E-4278-B34A-AEA58F61C91D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE30A1A4-259E-4278-B34A-AEA58F61C91D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE30A1A4-259E-4278-B34A-AEA58F61C91D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305388DB-C1A3-4E14-9F52-2D107375C4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305388DB-C1A3-4E14-9F52-2D107375C4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305388DB-C1A3-4E14-9F52-2D107375C4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305388DB-C1A3-4E14-9F52-2D107375C4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7267D84D-9ED7-484B-A0ED-9DF7B593E70D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7267D84D-9ED7-484B-A0ED-9DF7B593E70D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7267D84D-9ED7-484B-A0ED-9DF7B593E70D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7267D84D-9ED7-484B-A0ED-9DF7B593E70D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A342A78-AF6C-48EB-A259-410986E791FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A342A78-AF6C-48EB-A259-410986E791FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A342A78-AF6C-48EB-A259-410986E791FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A342A78-AF6C-48EB-A259-410986E791FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
