@@ -14,11 +14,14 @@ namespace AmazonAsinTracker.Application
     {
         private readonly IProductAsinRepository _productAsinRepository;
         private readonly IAmazonProductReader _amazonProductReader;
+        private readonly IProductReviewRepository _productReviewRepository;
 
-        public ProcessProductReviewCommandHandler(IProductAsinRepository productAsinRepository, IAmazonProductReader amazonProductReader)
+        public ProcessProductReviewCommandHandler(IProductAsinRepository productAsinRepository,
+            IAmazonProductReader amazonProductReader, IProductReviewRepository productReviewRepository)
         {
             _productAsinRepository = productAsinRepository;
             _amazonProductReader = amazonProductReader;
+            _productReviewRepository = productReviewRepository;
         }
 
         public async Task<Unit> Handle(ProcessProductReviewCommand request, CancellationToken cancellationToken)
@@ -29,6 +32,8 @@ namespace AmazonAsinTracker.Application
             foreach (var asinCode in productToTrack)
             {
                 string amazonContent = await _amazonProductReader.TrackAmazonReviewForAsinCodeMoreRecentReviewOnPage(asinCode, pageToRead);
+                var amazonReviewParser = new AmazonReviewParser(amazonContent);
+                _productReviewRepository.AppendReview(amazonReviewParser.GetReviews());
             }
 
             return Unit.Value;
