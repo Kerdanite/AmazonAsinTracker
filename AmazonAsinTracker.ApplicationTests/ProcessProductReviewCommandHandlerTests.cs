@@ -39,6 +39,86 @@ namespace AmazonAsinTracker.Application.Tests
 
             Assert.AreEqual("Great phone", productReviewRepositoryStub.Reviews.First().Title);
         }
+
+        [TestMethod()]
+        public async Task HandleTest_GetSecondReviewTitle()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual("Great phone, in great condition! Amazon Warehouse items are the best savings!", productReviewRepositoryStub.Reviews.ElementAt(1).Title);
+        }
+
+        [TestMethod()]
+        public async Task HandleTest_GetFirstReview_Date()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual(new DateTime(2021, 6, 2), productReviewRepositoryStub.Reviews.First().ReviewDate);
+        }
+
+        [TestMethod()]
+        public async Task HandleTest_GetSecondReview_Date()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual(new DateTime(2021, 5, 25), productReviewRepositoryStub.Reviews.ElementAt(1).ReviewDate);
+        }
+
+        [TestMethod()]
+        public async Task HandleTest_GetFirstReview_Score()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual(5, productReviewRepositoryStub.Reviews.First().Score);
+        }
+
+
+        [TestMethod()]
+        public async Task HandleTest_GetThirdReview_Score()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual(2, productReviewRepositoryStub.Reviews.ElementAt(2).Score);
+        }
+
+        [TestMethod()]
+        public async Task HandleTest_ReviewIsOnCorrectAsin()
+        {
+            string asin = "REVIEWTESTASIN";
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{asin});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual(asin, productReviewRepositoryStub.Reviews.ElementAt(2).AsinCode);
+        }
     }
 
     public class AmazonProductReaderStub : IAmazonProductReader
@@ -79,9 +159,15 @@ namespace AmazonAsinTracker.Application.Tests
     {
         public IEnumerable<ProductReview> Reviews { get; private set; }
 
-        public void AppendReview(IEnumerable<ProductReview> reviews)
+        public Task AppendReview(IEnumerable<ProductReview> reviews)
         {
             Reviews = reviews;
+            return Task.CompletedTask;
+        }
+
+        public Task<IEnumerable<ProductReview>> GetLastReviewsForProductByAsinCode(string requestAsinCode)
+        {
+            throw new NotImplementedException();
         }
     }
 }

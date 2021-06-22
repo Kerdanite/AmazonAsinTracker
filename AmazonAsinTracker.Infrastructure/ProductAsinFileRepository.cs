@@ -20,7 +20,7 @@ namespace AmazonAsinTracker.Infrastructure
             _productToTrackFiles = _fileStorageProvider.GetFolderLocation() + "/productToTrack.txt";
         }
 
-        public Task TrackProductsByAsinCodeAsync(IEnumerable<string> requestProductAsins, CancellationToken cancellationToken)
+        public async Task TrackProductsByAsinCodeAsync(IEnumerable<string> requestProductAsins, CancellationToken cancellationToken)
         {
             if (File.Exists(_productToTrackFiles))
             {
@@ -29,24 +29,21 @@ namespace AmazonAsinTracker.Infrastructure
 
             using (StreamWriter sw = File.CreateText(_productToTrackFiles))
             {
-                sw.WriteLine(string.Join(fileSeparator, requestProductAsins));
+                await sw.WriteLineAsync(string.Join(fileSeparator, requestProductAsins));
             }	
-        
-            return Task.CompletedTask;
         }
 
-        public Task<IEnumerable<string>> GetProductAsinToTrack(CancellationToken cancellationToken)
+        public async Task<IEnumerable<string>> GetProductAsinToTrack(CancellationToken cancellationToken)
         {
             if (!File.Exists(_productToTrackFiles))
             {
-                return Task.FromResult<IEnumerable<string>>(new List<string>());
+                return new List<string>();
             }
             using (StreamReader sr = File.OpenText(_productToTrackFiles))
             {
-                string content = sr.ReadToEnd().Trim();
-                return Task.FromResult<IEnumerable<string>>(content.Split(fileSeparator));
+                string content = (await sr.ReadToEndAsync()).Trim();
+                return content.Split(fileSeparator);
             }
-
         }
     }
 }

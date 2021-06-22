@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AmazonAsinTracker.Domain;
 using MediatR;
@@ -28,13 +29,15 @@ namespace AmazonAsinTracker.Application
         {
             int pageToRead = 1;
             var productToTrack = await _productAsinRepository.GetProductAsinToTrack(cancellationToken);
-
+            var reviews = new List<ProductReview>();
             foreach (var asinCode in productToTrack)
             {
                 string amazonContent = await _amazonProductReader.TrackAmazonReviewForAsinCodeMoreRecentReviewOnPage(asinCode, pageToRead);
-                var amazonReviewParser = new AmazonReviewParser(amazonContent);
-                _productReviewRepository.AppendReview(amazonReviewParser.GetReviews());
+                var amazonReviewParser = new AmazonReviewParser(amazonContent, asinCode);
+                reviews.AddRange(amazonReviewParser.GetReviews());
             }
+
+            await _productReviewRepository.AppendReview(reviews);
 
             return Unit.Value;
         }

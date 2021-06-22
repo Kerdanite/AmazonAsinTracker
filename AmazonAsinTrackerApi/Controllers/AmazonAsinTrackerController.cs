@@ -31,5 +31,12 @@ namespace AmazonAsinTrackerApi.Controllers
             return Accepted();
         }
 
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetLastReviews(string asinCode)
+        {
+            return Ok(await _mediator.Send(new GetLastProductReviewByAsinCodeQuery(asinCode)));
+        }
+
     }
 }
