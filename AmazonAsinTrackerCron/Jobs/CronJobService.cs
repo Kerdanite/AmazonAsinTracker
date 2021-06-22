@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AmazonAsinTracker.Application;
 using AmazonAsinTrackerCron.ScheduleConfiguration;
 using Cronos;
+using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -14,10 +16,12 @@ namespace AmazonAsinTrackerCron.Jobs
         private readonly CronExpression _expression;
         private readonly TimeZoneInfo _timeZoneInfo;
         private readonly ILogger<CronJobService> _logger;
+        private readonly IMediator _mediator;
 
-        public CronJobService(IScheduleConfig<CronJobService> config, ILogger<CronJobService> logger)
+        public CronJobService(IScheduleConfig<CronJobService> config, ILogger<CronJobService> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
             _expression = CronExpression.Parse(config.CronExpression);
             _timeZoneInfo = config.TimeZoneInfo;
         }
@@ -69,10 +73,10 @@ namespace AmazonAsinTrackerCron.Jobs
             await Task.CompletedTask;
         }
 
-        private  Task DoWork(CancellationToken cancellationToken)
+        private async Task DoWork(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{DateTime.Now:hh:mm:ss} CronJob is working.");
-            return Task.CompletedTask;
+            _logger.LogInformation($"{DateTime.Now:hh:mm:ss} CronJob  is working.");
+             await _mediator.Send(new ProcessProductReviewCommand());
         }
     }
 }

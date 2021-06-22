@@ -21,11 +21,11 @@ namespace AmazonAsinTrackerApi.Controllers
 
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        public async Task<ActionResult> TrackAsin(string asinCode)
+        public async Task<ActionResult> TrackAsin(IEnumerable<string> asinCodes)
         {
             await _mediator.Send(new TrackProductsByAsinCodeCommand
             {
-                ProductAsins = new List<string>(){asinCode}
+                ProductAsins = asinCodes
             });
 
             return Accepted();

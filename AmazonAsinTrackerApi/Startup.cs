@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using AmazonAsinTracker.Application;
+using AmazonAsinTracker.Infrastructure;
 using MediatR;
 
 namespace AmazonAsinTrackerApi
@@ -23,12 +24,13 @@ namespace AmazonAsinTrackerApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddInfrastructure(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmazonAsinTrackerApi", Version = "v1" });
             });
 
-            services.AddMediatR(typeof(TrackProductsByAsinCodeCommandHandler).Assembly);
+            services.AddMediatR(typeof(TrackProductsByAsinCodeCommand).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

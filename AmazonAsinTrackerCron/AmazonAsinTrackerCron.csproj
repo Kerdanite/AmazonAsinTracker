@@ -6,11 +6,18 @@
 
   <ItemGroup>
     <PackageReference Include="Cronos" Version="0.7.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Jobs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AmazonAsinTracker.Application\AmazonAsinTracker.Application.csproj" />
+    <ProjectReference Include="..\AmazonAsinTracker.Infrastructure\AmazonAsinTracker.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AmazonAsinTracker.Application\AmazonAsinTracker.Application.csproj" />
+    <ProjectReference Include="..\AmazonAsinTracker.Infrastructure\AmazonAsinTracker.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
