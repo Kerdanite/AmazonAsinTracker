@@ -64,11 +64,13 @@ namespace AmazonAsinTracker.Domain
         private string FindReviewTitle(string line)
         {
             var titleIndex = line.IndexOf("review-title-content");
-            var startReviewIndex = line.IndexOf("<span>", titleIndex);
-            var endTitleIndex = line.IndexOf("</span>", startReviewIndex);
-            var spanLength = 6;
+            var startReviewIndex = line.IndexOf("<span", titleIndex);
+            var starSpanEnd = line.IndexOf(">", startReviewIndex);
 
-            var title = line.Substring(startReviewIndex +spanLength, endTitleIndex - startReviewIndex - spanLength).Trim();
+            var endTitleIndex = line.IndexOf("</span>", starSpanEnd);
+            var spanLength = 1;
+
+            var title = line.Substring(starSpanEnd +spanLength, endTitleIndex - starSpanEnd - spanLength).Trim();
             return title;
         }
 

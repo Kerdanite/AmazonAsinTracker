@@ -119,6 +119,19 @@ namespace AmazonAsinTracker.Application.Tests
 
             Assert.AreEqual(asin, productReviewRepositoryStub.Reviews.ElementAt(2).AsinCode);
         }
+
+        [TestMethod()]
+        public async Task HandleTest_GetNinthReview_TitleOnOtherLanguage()
+        {
+            var amazonReader = new AmazonProductReaderStub(_fileContent);
+            var productTrackRepo = new ProductAsinRepositoryStub(new List<string>{"B082XY23D5"});
+            var productReviewRepositoryStub = new ProductReviewRepositoryStub();
+            var sut = new ProcessProductReviewCommandHandler(productTrackRepo, amazonReader, productReviewRepositoryStub);
+
+            await sut.Handle(new ProcessProductReviewCommand(), CancellationToken.None);
+
+            Assert.AreEqual("Muy buen cell", productReviewRepositoryStub.Reviews.ElementAt(8).Title);
+        }
     }
 
     public class AmazonProductReaderStub : IAmazonProductReader

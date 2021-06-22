@@ -22,3 +22,4 @@ Beaucoup de compromis ont été fait afin d'essayer de respecter une contrainte 
   * Au niveau de la persistence, il faudrait prévoir un système capable d'allez lire toutes les review de manière incrémentale, et de stocker uniquement les nouvelles review par rapport à celles connues.
   * La lecture des review renvoit actuellement les 10 dernières review, mettre en place au niveau de l'API (via QueryOptions) un système de querying
   * Vu que c'est un POC, il n'y a aucune notion de log ni de gestion d'erreurs, il faut donc les mettre en place
+  * Les données persistées des reviews sont pour l'instant le minima, il faudrait prévoir de persister plus d'info de chaque review (autheur, contenu, acheteur vérifié, nombre de vote utiles ...)
