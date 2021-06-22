@@ -11,7 +11,8 @@ namespace AmazonAsinTracker.Infrastructure
             IConfiguration configuration)
         {
             services.AddSingleton<IFileStorageProvider>(x => new FileStorageProvider(configuration.GetSection("PersistantFolderLocation").Value));
-            services.AddTransient<IProductAsinRepository, ProductAsinFileRepository>();
+            services.AddSingleton<IProductAsinRepository, ProductAsinFileRepository>();
+            services.AddSingleton<IAmazonProductReader, AmazonProductReader>();
             return services;
         }
     }

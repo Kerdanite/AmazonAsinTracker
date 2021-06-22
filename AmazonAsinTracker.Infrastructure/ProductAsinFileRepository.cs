@@ -43,7 +43,7 @@ namespace AmazonAsinTracker.Infrastructure
             }
             using (StreamReader sr = File.OpenText(_productToTrackFiles))
             {
-                string content = sr.ReadToEnd();
+                string content = sr.ReadToEnd().Trim();
                 return Task.FromResult<IEnumerable<string>>(content.Split(fileSeparator));
             }
 
