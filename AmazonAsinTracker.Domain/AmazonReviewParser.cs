@@ -41,9 +41,6 @@ namespace AmazonAsinTracker.Domain
             var scoreIndex = line.IndexOf("review-rating");
             var startScoreSearch = "<span class=\\\"a-icon-alt\\\">";
             var startIndexDate = line.IndexOf(startScoreSearch, scoreIndex);
-            var endIndexDate = line.IndexOf("</span>", startIndexDate);
-            var spanLength = 3;
-
             var scoreString = line.Substring(startIndexDate +startScoreSearch.Length, 1).Trim();
 
             return int.Parse(scoreString);
